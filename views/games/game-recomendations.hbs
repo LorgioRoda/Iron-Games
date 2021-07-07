@@ -1,0 +1,31 @@
+<div class="container pt-5">
+  <h3 class="text-center pt-5">Your game recomendations</h3>
+
+  <div class="d-flex flex-wrap justify-content-center">
+    {{#each games}}
+    <div class="game-container">
+      {{> gameCard }}
+      <div class="game-card-actions d-flex">
+        <form method="POST" {{#unless owned}}action="/game/add-collection" {{/unless}} {{#if
+          owned}}action="/game/remove-collection" {{/if}}>
+          <input type="hidden" class="hide" name="gameID" value="{{id}}">
+          <button type="submit" class="remove-collection {{#if owned}}collection{{/if}}">
+            {{#unless owned}}<i class="far fa-bookmark"></i>{{/unless}}
+            {{#if owned}}<i class="fas fa-bookmark"></i>{{/if}}
+          </button>
+        </form>
+        {{#unless owned}}
+        <form method="POST" {{#unless wishlisted}}action="/game/add-wishlist" {{/unless}} {{#if
+          wishlisted}}action="/game/remove-wishlist" {{/if}}>
+          <input type="hidden" class="hide" name="gameID" value="{{id}}">
+          <button type="submit" {{#if wishlisted}}class="wishlist"{{/if}}>
+            {{#unless wishlisted}}<i class="far fa-heart"></i>{{/unless}}
+            {{#if wishlisted}}<i class="fas fa-heart"></i>{{/if}}
+          </button>
+        </form>
+        {{/unless}}
+      </div>      
+    </div>
+    {{/each}}
+  </div>
+</div>

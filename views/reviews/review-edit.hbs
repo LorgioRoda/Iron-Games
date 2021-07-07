@@ -1,0 +1,13 @@
+<div class="container">
+  <form action="/review/{{review._id}}/edit" method="POST" class="d-flex flex-column edit-review m-4">
+    <input type="hidden" class="hide" name="redirect" value="{{redirectURL}}">
+    <div class="mb-3">
+      <label for="review" class="form-label">Review the game!</label>
+      <textarea class="form-control" name="review" id="review" cols="30" rows="10">{{review.comment}}</textarea>
+    </div>
+    <button type="submit" class="btn">Edit review</button>
+  </form>
+  <div class="my-5">
+    <a href="{{redirectURL}}" class="btn">Go back</a>
+  </div>
+</div>

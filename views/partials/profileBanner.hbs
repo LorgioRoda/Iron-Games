@@ -1,0 +1,27 @@
+<div class="container__profile">
+     {{!-- Images Profile --}}
+     <div class="imagesProfile__background">
+      <img src="{{user.profile_Background}}" alt="">
+    </div>
+     {{!-- Profile Games --}}
+    <div class=" edit__profile">
+      <div class="col edit__profile--gamelist">
+      <a href="/user/{{user._id}}"rel="noopener noreferrer">Profile</a>
+      <a href="/user/{{user._id}}/collection" rel="noopener noreferrer">Game List</a>
+      <a href="/user/{{user._id}}/wishlist" rel="noopener noreferrer">Wishlist</a>
+      <a href="/user/{{user._id}}/reviews" rel="noopener noreferrer">Reviews</a>
+     </div>
+     {{!-- Profile edit --}}
+    {{#if authUser}}
+    <div class="col-3 edit__profile--edit">
+    <a href="/profile/edit" rel="noopener noreferrer">Edit</a>
+      <form action="/profile/{{user._id}}/delete" method="POST">
+        <button class="buttom__profile--delete" type="submit">Delete</button>
+      </form>
+    {{/if}}
+      </div>
+    </div>
+
+    <div class="imagesProfile">
+      <img src="{{user.profile_pic}}" alt="">
+</div>

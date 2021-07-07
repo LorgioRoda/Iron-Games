@@ -1,0 +1,106 @@
+<div class="game-header">
+  <img src="{{game.background_image}}" alt="">
+  <h3>{{game.name}}</h3>
+  <div class="game-card-actions d-flex">
+    {{!-- Add/Remove Game from user collection --}}
+    <form method="POST" {{#unless inCollection}}action="/game/add-collection" {{/unless}} {{#if
+      inCollection}}action="/game/remove-collection" {{/if}}>
+      <input type="hidden" class="hide" name="gameID" value="{{game._id}}">
+      <button type="submit" class="remove-collection {{#if inCollection}}collection{{/if}}">
+        {{#unless inCollection}}<i class="far fa-bookmark"></i>{{/unless}}
+        {{#if inCollection}}<i class="fas fa-bookmark"></i>{{/if}}
+      </button>
+    </form>
+    {{!-- Add/Remove Game from user wishlist --}}
+    {{#unless inCollection}}
+    <form method="POST" {{#unless inWishlist}}action="/game/add-wishlist" {{/unless}} {{#if
+      inWishlist}}action="/game/remove-wishlist" {{/if}}>
+      <input type="hidden" class="hide" name="gameID" value="{{game._id}}">
+      <button type="submit" {{#if inWishlist}}class="wishlist" {{/if}}>
+        {{#unless inWishlist}}<i class="far fa-heart"></i>{{/unless}}
+        {{#if inWishlist}}<i class="fas fa-heart"></i>{{/if}}
+      </button>
+    </form>
+    {{/unless}}
+  </div>
+</div>
+
+<div class="container">
+  {{!-- GAME INFO SECTION --}}
+  <section>
+    <div class="row">
+      <div class="col-8">
+        <h3>Game info</h3>
+        <div class="row">
+          <p class="game-info">{{{game.description}}}</p>
+        </div>
+      </div>
+      <div class="col-4 detail__game">
+        <h3>Technical info</h3>
+        <p>Release date: {{game.released}}</p>
+        <a href="{{game.website}}">
+          <p >Official website</p>
+        </a>
+        <p>Developers:</p>
+        {{#each game.developers}}
+        <p>{{this}}</p>
+        {{/each}}
+        <a href="{{game.metacritic_url}}">
+          <p>Metacritic score: {{game.metacritic}}</p>
+        </a>
+        {{#each game.genres}}
+        <div class="badge bg-danger">
+          <span class="p-2">{{this}}</span>
+        </div>
+        {{/each}}
+        {{#each game.tags}}
+        <div class="badge bg-danger">
+          <span class="p-2">{{this}}</span>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </section>
+
+  <section class="my-4">
+    <div class="accordion accordion-flush" id="game-photos">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="photos">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedPhotos"
+            aria-expanded="true" aria-controls="collapsedPhotos">
+            PHOTOS
+          </button>
+        </h2>
+        <div id="collapsedPhotos" class="accordion-collapse collapse" aria-labelledby="photos"
+          data-bs-parent="#game-photos">
+          <div class="accordion-body game-gallery">
+            {{#each game.screenshoots}}
+            <img class="gallery-img" src="{{this}}" alt="sylvanas photo">
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- Post a review if user is authenticated--}}
+  {{#if sessionUser}}
+  <form action="/review/create" method="POST" class="d-flex flex-column edit-review">
+    <input type="hidden" class="hide" name="gameID" value="{{game._id}}">
+    <div class="mb-3">
+      <label for="review" class="form-label">Review the game!</label>
+      <textarea class="form-control" name="review" id="review" cols="30" rows="10"></textarea>
+    </div>
+    <button type="submit" class="btn">Post review</button>
+  </form>
+  {{/if}}
+
+  {{!-- List of reviews --}}
+  <div class="review-container">
+    {{#each reviews}}
+      {{> reviewPost}}
+    {{/each}}
+  </div>
+
+  <script src="/javascripts/axiosHandler.js"></script>
+  <script src="/javascripts/reviewActions.js"></script>

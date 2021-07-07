@@ -1,0 +1,23 @@
+{{> profileBanner }}
+<br>
+
+<div class="container">
+  <h3>Game List</h3>
+  <div class="d-flex flex-wrap justify-content-center">
+    {{#each user.gameList}}
+    <div class="game-container">
+      {{> gameCard }}
+      {{#if authUser}}
+      <div class="game-card-actions d-flex">
+        <form method="POST" action="/game/remove-collection">
+          <input type="hidden" class="hide" name="gameID" value="{{id}}">
+          <button type="submit" class="remove-collection collection">
+            <i class="fas fa-bookmark"></i>
+          </button>
+        </form>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+</div>

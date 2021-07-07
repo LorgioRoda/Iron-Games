@@ -1,0 +1,88 @@
+<div class="container__profile">
+  {{!-- Images Profile --}}
+  <div class="imagesProfile__background">
+    <img src="{{user.profile_Background}}" alt="">
+  </div>
+  {{!-- Profile Games --}}
+  <div class=" edit__profile">
+    <div class="col edit__profile--gamelist">
+      <a href="/user/{{user._id}}/collection" rel="noopener noreferrer">Game List</a>
+      <a href="/user/{{user._id}}/wishlist" rel="noopener noreferrer">Wishlist</a>
+      <a href="/user/{{user._id}}/reviews" rel="noopener noreferrer">Reviews</a>
+    </div>
+    {{!-- Profile edit --}}
+    {{#if authUser}}
+    <div class="col-3 edit__profile--edit">
+      <a href="/profile/edit" rel="noopener noreferrer">Edit</a>
+      <form action="/profile/{{user._id}}/delete" method="POST">
+        <button class="buttom__profile--delete" type="submit">Delete</button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="imagesProfile">
+    <img src="{{user.profile_pic}}" alt="">
+  </div>
+
+
+  {{!-- Info Profile --}}
+  <div class="container">
+    <div class="info">
+      <H2>{{user.name}}</H2>
+      <div class="info__description">
+        <p>{{user.description}}</p>
+      </div>
+      <br>
+      <h5>Your favourites genres:</h5> {{user.genres}}
+      <p>Location: {{user.city}} 🇪🇸</p>
+      <div class="info__social">
+        <a href="{{user.social.facebook}}"><i class="fab fa-facebook"></i></a>
+        <a href="{{user.social.twitter}}"><i class="fab fa-twitter"></i></a>
+        <a href="{{user.social.steam}}"><i class="fab fa-steam"></i></a>
+      </div>
+    </div>
+
+    <hr>
+    <div class="profile__gamelist">
+      <h3>Game List</h3>
+      <div class="d-flex flex-wrap justify-content-center">
+        {{#each user.gameList}}
+        <div class="game-container">
+          {{> gameCard }}
+          <div class="game-card-actions d-flex">
+            <form method="POST" action="/game/remove-collection">
+              <input type="hidden" class="hide" name="gameID" value="{{id}}">
+              <button type="submit" class="remove-collection collection">
+                <i class="fas fa-bookmark"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <hr>
+    <h3>Wishlist</h3>
+    <div class="d-flex flex-wrap justify-content-center">
+      {{#each user.wishlist}}
+      <div class="game-container">
+        {{> gameCard }}
+        <div class="game-card-actions d-flex">
+          <form method="POST" action="/game/add-collection">
+            <input type="hidden" class="hide" name="gameID" value="{{id}}">
+            <button type="submit" class="remove-collection">
+              <i class="far fa-bookmark"></i>
+            </button>
+          </form>
+          <form method="POST" action="/game/remove-wishlist">
+            <input type="hidden" class="hide" name="gameID" value="{{id}}">
+            <button type="submit" class="wishlist"><i class="fas fa-heart"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

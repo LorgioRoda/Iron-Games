@@ -1,0 +1,53 @@
+{{> profileBanner }}
+<br>
+<div class="container">
+  <h3>Reviews</h3>
+  {{!-- List of reviews --}}
+  <div class="review-container">
+    {{#each reviews}}
+    <div class="card text-dark bg-light my-4">
+      <div class="h5 card-header d-flex align-items-center justify-content-between">
+        <div class="reviews__links">
+          {{#if user._id}}<a href="/user/{{user._id}}"><img src="{{user.profile_pic}}" alt="user-pic"
+              class="review-avatar"><span class="mx-4">{{user.name}}</span></a> {{/if}}
+          {{#unless user}}<img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+            alt="user-pic" class="review-avatar"></a> <span class="mx-4">Unknown</span>{{/unless}}
+        </div>
+
+        <div class="reviews-actions d-flex">
+          <a href="/game/{{game._id}}">{{game.name}}</a>
+          {{#if sessionUserRev}}
+          <form action="/review/{{_id}}/edit" method="GET">
+            <button type="submit"><i class="far fa-edit"></i></button>
+          </form>
+          <form action="/review/{{_id}}/delete" method="POST">
+            <button type="submit" class="remove-review"><i class="far fa-trash-alt"></i></button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{comment}}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between reviews-actions">
+        <div class="d-flex">
+          <form action="/review/{{_id}}/upvote" method="POST">
+            <button type="submit" class="{{#unless
+            sessionUserRev}}upvote{{/unless}} fas fa-arrow-circle-up" {{#if sessionUserRev}}disabled{{/if}}><span>
+                {{upvote}} </span></button>
+          </form>
+          <form action="/review/{{_id}}/downvote" method="POST">
+            <button type="submit" class="{{#unless
+            sessionUserRev}}downvote{{/unless}} fas fa-arrow-circle-down" {{#if sessionUserRev}}disabled{{/if}}><span>
+                {{downvote}} </span></button>
+          </form>
+        </div>
+        <div>
+          <span class="float-end">{{created_at}}</span>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

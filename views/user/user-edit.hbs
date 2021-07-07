@@ -1,0 +1,78 @@
+{{> profileBanner }}
+<br>
+<h3 class="container">Form</h3>
+
+<br>
+<form action="/profile/edit" method="POST" enctype="multipart/form-data">
+  <div class="container">
+    <div class="row">
+      <div class="mb-3 col">
+        <label for="profileImage" class="form-label">Profile image</label>
+        <input class="form-control" type="file" id="formFileDisabled" name='profileImage' value="{{user.profile_pic}}">
+        <br>
+
+        <div class="mb-3 col">
+          <label for="profile_Background" class="form-label">Background</label>
+          <input class="form-control" type="file" id="formFileDisabled" name="profile_Background"
+            value="{{user.profile_Background}}">
+        </div </div>
+      </div>
+      <hr>
+
+      <div class="container">
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="username" name="user"
+              value="{{user.name}}">
+          </div>
+
+          <div class="mb-3 col">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" placeholder="city" name='city' value="{{user.city}}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"
+              value="{{user.description}}"></textarea>
+          </div>
+          <div class="mb-3 col">
+            <label class="form-label" for="genres">Select your favourites genres:</label>
+            <select class="form-select col" multiple aria-label="multiple select" name="genres" value="{{user.genres}}">
+              <option value="Action">Action</option>
+              <option value="Platformer">Platformer</option>
+              <option value="Puzzle">Puzzle</option>
+              <option value="Ironhack">Ironhack</option>
+              <option value="RPG">RPG</option>
+              <option value="Shooter">Shooter</option>
+              <option value="Indie">Indie</option>
+              <option value="Massively Multiplayer">Massively Multiplayer</option>
+            </select>
+          </div>
+        </div>
+
+        {{!-- Social --}}
+        <div class="row">
+          <div class="mb-3 col-4">
+            <label for="exampleFormControlInput1" class="form-label">Facebook</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Facebook account"
+              name="facebook" value="{{user.social.facebook}}">
+          </div>
+          <div class="mb-3 col-4">
+            <label for="exampleFormControlInput1" class="form-label">Twitter</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Twitter account"
+              name="twitter" value="{{user.social.twitter}}">
+          </div>
+          <div class="mb-3 col-4">
+            <label for="exampleFormControlInput1" class="form-label">Steam</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Steam account"
+              name="steam" value="{{user.social.steam}}">
+          </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary me-md-2" type="submit">Save</button>
+        </div>
+</form>
+</div>
